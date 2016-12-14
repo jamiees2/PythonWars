@@ -1,0 +1,28 @@
+body {
+  background: #eeeeee;
+}
+
+.panel {
+  background: white;
+  padding: 20px;
+}
+
+.login-panel {
+  margin: 5rem 15rem;
+  padding: 0rem 4rem;
+  padding-top: 1rem;
+}
+
+.form-title {
+  font-weight: 200;
+}
+
+.error {
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1;
+}

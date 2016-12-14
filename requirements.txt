@@ -1,0 +1,7 @@
+bcrypt
+Flask
+Flask-Migrate
+Flask-Script
+Flask-SQLAlchemy
+voluptuous
+passlib
