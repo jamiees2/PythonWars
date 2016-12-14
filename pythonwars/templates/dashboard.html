@@ -1,4 +1,13 @@
 {% extends "layout.html" %}
 {% block content %}
 <h1>Hello, {{user.username}}</h1>
+<div class="row">
+  <div class="col s6">
+    Canvas
+  </div>
+  <div class="col s6">
+        Codemirror
+        <textarea id="code"></textarea>
+  </div>
+</div>
 {% endblock %}

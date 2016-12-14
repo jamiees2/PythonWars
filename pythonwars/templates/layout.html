@@ -5,6 +5,7 @@
       <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
       <!--Import materialize.css-->
       <link type="text/css" rel="stylesheet" href="{{url_for('static', filename='css/materialize.min.css')}}"  media="screen,projection"/>
+      <link type="text/css" rel="stylesheet" href="{{url_for('static', filename='css/codemirror.css')}}">
       <link type="text/css" rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}"  media="screen,projection"/>
 
       <!--Let browser know website is optimized for mobile-->
@@ -15,10 +16,17 @@
         <div class="nav-wrapper blue">
             <div class="container">
                 <a href="{{ url_for('index') }}" class="brand-logo">PythonWars</a>
-                <ul id="nav-mobile" class="right hide-on-med-and-down">
-                    <li><a href="{{ url_for('login') }}">Login</a></li>
-                    <li><a href="{{ url_for('register') }}">Register</a></li>
-                </ul>
+                {% if not session.user %}
+                  <ul id="nav-mobile" class="right hide-on-med-and-down">
+                      <li><a href="{{ url_for('login') }}">Login</a></li>
+                      <li><a href="{{ url_for('register') }}">Register</a></li>
+                  </ul>
+                {% else %}
+                  <ul id="nav-mobile" class="right hide-on-med-and-down">
+                      <li><a href="{{ url_for('dashboard') }}">Play</a></li>
+                      <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                  </ul>
+                {% endif %}
             </div>
         </div>
     </nav>
@@ -29,6 +37,8 @@
       <!--Import jQuery before materialize.js-->
       <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
       <script type="text/javascript" src="{{url_for('static', filename='js/materialize.min.js')}}"></script>
+      <script type="text/javascript" src="{{url_for('static', filename='js/codemirror.js')}}"></script>
+      <script src="{{url_for('static', filename='js/python.js')}}"></script>
       <script type="text/javascript" src="{{url_for('static', filename='js/main.js')}}"></script>
     </body>
   </html>
