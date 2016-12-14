@@ -1,4 +1,4 @@
-from flask import Flask, redirect, render_template, url_for, request, session, make_response
+from flask import Flask, redirect, render_template, url_for, request, session, make_response,jsonify
 from pythonwars.models import db, User
 from pythonwars.util import is_logged_in, login_required, context_processor
 from pythonwars.config import SECRET_KEY, SQLALCHEMY_DATABASE_URI, SQLALCHEMY_TRACK_MODIFICATIONS
@@ -59,3 +59,15 @@ def register():
 @login_required
 def dashboard():
     return render_template('dashboard.html')
+
+@pythonwars.route('/submit', methods=['POST'])
+@login_required
+def submit():
+    code = request.form['data']
+    print(code)
+    d = {'a': 2, 'b': 3}
+    return jsonify(**d)
+
+
+
+
