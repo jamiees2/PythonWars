@@ -1,7 +1,44 @@
 {% extends "layout.html" %}
 {% block content %}
-<h1>Hello, {{user.username}}</h1>
-<div id="game"></div>
+<div class="row">
+  <div class="col s6">
+    <div id="game"></div>
+  </div>
+  <div class="col s6">
+        Codemirror
+        <form class="col s12">
+            <div class="row">
+                <div class="input-field col s12">
+                    <textarea id="code" name="code" type="textarea">
+def move(robot):
+    # Your code here
+                    </textarea>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="submit" class="btn right" type="button" value="Submit Code" onClick="submit_code()" />
+                    <div id="loading">
+                      <div class="preloader-wrapper small active">
+                        <div class="spinner-layer spinner-green-only">
+                          <div class="circle-clipper left">
+                            <div class="circle"></div>
+                          </div><div class="gap-patch">
+                            <div class="circle"></div>
+                          </div><div class="circle-clipper right">
+                            <div class="circle"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div id="success">
+                        Success
+                    </div>
+                </div>
+            </div>
+        </form>
+  </div>
+</div>
 {% endblock %}
 {% block script %}
     <script src="//cdn.jsdelivr.net/phaser/2.2.2/phaser.min.js"></script>

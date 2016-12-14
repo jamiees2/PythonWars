@@ -26,3 +26,11 @@ body {
   background-color: #f2dede;
   border-color: #ebccd1;
 }
+
+#loading {
+  display: none;
+}
+
+#success {
+  display: none;
+}
