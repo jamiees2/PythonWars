@@ -67,29 +67,34 @@ PythonWars.prototype = {
 
     this.cursors = this.input.keyboard.createCursorKeys();
 
-    sprites = {
-                "A": ["PLAYER", 1, 1],
-                "B": ["ENEMY", 3, 1],
-                "C": ["ENEMY", 4, 1],
-                "D": ["ENEMY", 5, 1],
-                "E": ["COIN", 3, 5]
-    };
-
     actions = [
-                ["A", "DOWN"],
-                ["A", "DOWN"],
-                ["A", "DOWN"],
-                ["A", "DOWN"],
-                ["A", "RIGHT"],
-                ["D", "RIGHT"],
-                ["D", "RIGHT"],
-                ["D", "LEFT"],
-                ["C", "DESTRUCT"],
-                ["A", "RIGHT"],
-                ["E", "DESTRUCT"]
+                [
+                  ["A", "CREATE", "PLAYER", 1, 1],
+                  ["B", "CREATE", "ENEMY", 3, 1],
+                  ["C", "CREATE", "ENEMY", 4, 1],
+                  ["D", "CREATE", "ENEMY", 5, 1]
+                ],
+                [["A", "DOWN"], ["B", "DOWN"]],
+                [["A", "DOWN"], ["B", "DOWN"]],
+                [["A", "DOWN"], ["B", "DOWN"]],
+                [
+                  ["A", "DOWN"],
+                  ["B", "UP"],
+                  ["E", "CREATE", "COIN", 3, 5, 1]
+                ],
+                [["A", "RIGHT"]],
+                [
+                  ["D", "RIGHT"],
+                  ["C", "DESTRUCT"],
+                  ["A", "RIGHT"]
+                ],
+                [
+                  ["D", "RIGHT"],
+                  ["E", "DESTRUCT"]
+                ],
+                [["D", "LEFT"]]
     ];
 
-    this.loadSprites(sprites);
     this.run(actions);
   },
 
@@ -101,33 +106,31 @@ PythonWars.prototype = {
     layer.resizeWorld();
   },
 
-  loadSprites: function(sprites) {
-    for( var key in sprites)
-    {
-      type = sprites[key][0];
-      x = sprites[key][1];
-      y = sprites[key][2];
+  loadSprite: function(id, args) {
+    type = args[0]
+    x = args[1]
+    y = args[2]
 
-      switch(type){
-          case "PLAYER":
-            sprite = this.add.sprite(32, 32, 'sprites');
-            console.log(sprite.width)
-            break;
-          case "ENEMY":
-            sprite = this.add.sprite(32, 32, 'sprites', 1);
-            break;
-          case "COIN":
-            sprite = this.add.sprite(32, 32, 'sprites', 2);
-            break;
-      }
-
-      this.sprites[key] = new PythonSprite(key, x, y, sprite);
-      this.sprites[key].init();
+    switch(type){
+        case "PLAYER":
+          sprite = this.add.sprite(32, 32, 'sprites');
+          break;
+        case "ENEMY":
+          sprite = this.add.sprite(32, 32, 'sprites', 1);
+          break;
+        case "COIN":
+          coinValue = args[3];
+          sprite = this.add.sprite(32, 32, 'sprites', 2 + (coinValue - 1));
+          break;
     }
+
+    this.sprites[id] = new PythonSprite(id, x, y, sprite);
+    this.sprites[id].init();
   },
 
-  commands: function(id, command) {
+  commands: function(id, command, args) {
     sprite = this.sprites[id];
+
     switch(command) {
         case "UP":
           sprite.move(Phaser.UP);
@@ -145,6 +148,9 @@ PythonWars.prototype = {
           this.world.remove(this.sprites[id].sprite);
           delete this.sprites[id];
           break;
+        case "CREATE":
+          this.loadSprite(id, args);
+          break;
         default:
             console.log("ERROR: invalid command ", command);
     }
@@ -154,9 +160,15 @@ PythonWars.prototype = {
   run: function(actions) {
     if (actions.length > 0) {
       a = actions.shift();
-      id = a[0];
-      action = a[1];
-      this.commands(id, action);
+
+      for(tick in a) {
+        tick_actions = a[tick];
+        console.log(tick_actions)
+        id = tick_actions.shift();
+        action = tick_actions.shift();
+        this.commands(id, action, tick_actions);
+      }
+
       this.time.events.add(Phaser.Timer.SECOND * 0.7, function(){this.run(actions)}, this);
     }
   },
