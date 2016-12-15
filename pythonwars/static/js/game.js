@@ -37,7 +37,7 @@ PythonSprite.prototype = {
       default:
         console.log("ERROR: PythonSprite.move");
     }
-    this.updatePos();
+    game.add.tween(this.sprite).to( { x: this.x * 32, y: this.y * 32  }, 500, Phaser.Easing.Linear.None, true );
   },
 
   updatePos: function(direction) {
@@ -53,26 +53,26 @@ PythonWars.prototype = {
   },
 
   preload: function () {
-
-    this.load.tilemap('map', 'static/assets/maze.json', null, Phaser.Tilemap.TILED_JSON);
+    this.load.tilemap('map', 'static/assets/maze.csv', null, Phaser.Tilemap.CSV);
     this.load.image('tiles', 'static/img/tiles.png');
-    this.load.image('bot', 'static/img/bot.png');
+    this.load.spritesheet('sprites', 'static/img/sprites.png', 32, 32, 5);
   },
 
   create: function () {
     this.map = this.add.tilemap('map');
     this.map.addTilesetImage('tiles', 'tiles');
 
-    this.layer = this.map.createLayer('Tile Layer 1');
-
+    layer = this.map.createLayer(0);
+    layer.resizeWorld();
 
     this.cursors = this.input.keyboard.createCursorKeys();
 
     sprites = {
-                "A": [1, 1],
-                "B": [3, 1],
-                "C": [4, 1],
-                "D": [5, 1]
+                "A": ["PLAYER", 1, 1],
+                "B": ["ENEMY", 3, 1],
+                "C": ["ENEMY", 4, 1],
+                "D": ["ENEMY", 5, 1],
+                "E": ["COIN", 3, 5]
     };
 
     actions = [
@@ -81,10 +81,12 @@ PythonWars.prototype = {
                 ["A", "DOWN"],
                 ["A", "DOWN"],
                 ["A", "RIGHT"],
-                ["C", "RIGHT"],
-                ["C", "RIGHT"],
-                ["C", "LEFT"],
-                ["D", "DESTRUCT"]
+                ["D", "RIGHT"],
+                ["D", "RIGHT"],
+                ["D", "LEFT"],
+                ["C", "DESTRUCT"],
+                ["A", "RIGHT"],
+                ["E", "DESTRUCT"]
     ];
 
     this.loadSprites(sprites);
@@ -92,15 +94,33 @@ PythonWars.prototype = {
   },
 
   loadMap: function(mapData) {
-
+    this.load.tilemap('map', null, mapData, Phaser.Tilemap.CSV);
+    this.map = this.add.tilemap('map');
+    this.map.addTilesetImage('tiles', 'tiles');
+    layer = this.map.createLayer(0);
+    layer.resizeWorld();
   },
 
   loadSprites: function(sprites) {
     for( var key in sprites)
     {
-      x = sprites[key][0];
-      y = sprites[key][1];
-      sprite = this.add.sprite(32, 32, 'bot');
+      type = sprites[key][0];
+      x = sprites[key][1];
+      y = sprites[key][2];
+
+      switch(type){
+          case "PLAYER":
+            sprite = this.add.sprite(32, 32, 'sprites');
+            console.log(sprite.width)
+            break;
+          case "ENEMY":
+            sprite = this.add.sprite(32, 32, 'sprites', 1);
+            break;
+          case "COIN":
+            sprite = this.add.sprite(32, 32, 'sprites', 2);
+            break;
+      }
+
       this.sprites[key] = new PythonSprite(key, x, y, sprite);
       this.sprites[key].init();
     }
@@ -122,6 +142,7 @@ PythonWars.prototype = {
           sprite.move(Phaser.LEFT);
           break;
         case "DESTRUCT":
+          this.world.remove(this.sprites[id].sprite);
           delete this.sprites[id];
           break;
         default:
@@ -136,7 +157,7 @@ PythonWars.prototype = {
       id = a[0];
       action = a[1];
       this.commands(id, action);
-      setTimeout(this.run(actions), 10000);
+      this.time.events.add(Phaser.Timer.SECOND * 0.7, function(){this.run(actions)}, this);
     }
   },
 
