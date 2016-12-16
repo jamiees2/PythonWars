@@ -22,12 +22,12 @@ class World(object):
 
     def get_at(self, x, y):
         if self.check_bounds(x, y):
-            return self._maze[x][y]
+            return self._maze[y][x]
 
     def create_object(self, o, x, y):
         if self.get_at(x, y) == EMPTY:
             o._world = self
-            self._maze[x][y] = o
+            self._maze[y][x] = o
             self._time.append([o.id, 'CREATE', o.type, x, y])
         else:
             raise TypeError("Can't place object on a wall")
@@ -35,7 +35,7 @@ class World(object):
     def destroy_object(self, o):
         o_id = o.id
         x, y = self._objects[o_id]
-        self._maze[x][y] == EMPTY
+        self._maze[y][x] == EMPTY
         self._time.append([o.id, 'DESTRUCT'])
 
     def move_object(self, o, newx, newy):
@@ -46,8 +46,8 @@ class World(object):
             flag = res.collision(o)
         if res == EMPTY or flag:
             self._objects[o.id] = (newx, newy)
-            self._maze[newx][newy] = o
-            self._maze[x][y] = EMPTY
+            self._maze[newy][newx] = o
+            self._maze[y][x] = EMPTY
 
     def move(self, o, d):
         x, y = self.get_object(o.id)
@@ -68,8 +68,8 @@ class World(object):
         return self._objects[id]
 
     def check_bounds(self, x, y):
-        if 0 < x < len(self._maze):
-            if 0 < y < len(self._maze[0]):
+        if 0 <= x < len(self._maze[0]):
+            if 0 <= y < len(self._maze):
                 return True
         raise TypeError("Arguments out of bounds")
 
