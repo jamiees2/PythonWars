@@ -19,11 +19,11 @@ class World(object):
         self._s = '\n'.join(','.join(str(i) for i in row) for row in self._maze)
 
 
-    def get_at(x,y):
+    def get_at(self, x,y):
         if self.check_bounds(x,y):
             return self._maze[x][y]
 
-    def create_object(o,x,y):
+    def create_object(self, o,x,y):
         if self.get_at(x,y) == EMPTY:
             o._world = self
             self._maze[x][y] = o
@@ -31,13 +31,13 @@ class World(object):
         else:
             raise TypeError("Can't place object on a wall")
 
-    def destroy_object(o):
+    def destroy_object(self, o):
         o_id = o.id
         x,y = self._objects[o_id]
         self._maze[x][y] == EMPTY
         self._time.append([o.id, 'DESTRUCT'])
 
-    def move_object(o,newx,newy):
+    def move_object(self, o,newx,newy):
         x,y = self.get_object(o.id)
         res = self.get_at(newx,newy)
         flag = False
@@ -48,7 +48,7 @@ class World(object):
             self._maze[newx][newy] = o
             self._maze[x][y] = EMPTY
 
-    def move(o,d):
+    def move(self,o,d):
         x,y = self.get_object(o.id)
         if d == 'UP':
             self.move_object(o,x,y+1)
@@ -64,16 +64,16 @@ class World(object):
             self._time.append([o.id,'RIGHT'])
 
 
-    def get_object(id):
+    def get_object(self,id):
         return self._objects[id]
 
-    def check_bounds(x,y):
+    def check_bounds(self,x,y):
         if 0 < x < len(self._maze):
             if 0 < y < len(self._maze[0]):
                 return True
         raise TypeError("Arguments out of bounds")
 
-    def tick():
+    def tick(self):
         self._moves.append(self._time)
         self._time = []
 
