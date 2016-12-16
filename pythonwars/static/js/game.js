@@ -150,7 +150,8 @@ PythonWars.prototype = {
     }
   },
 
-  run: function(actions) {
+  run: function(actions, maze) {
+    this.loadMap(maze);
     this.resetSprites();
     this.actionLoop(actions);
   },

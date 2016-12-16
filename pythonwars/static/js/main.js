@@ -12,7 +12,7 @@ var editor = CodeMirror.fromTextArea(document.getElementById('code'), {
 function accept_code(data) {
     document.getElementById("loading").style.display = "none";
     document.getElementById("success").style.display = "inline";
-    game.state.getCurrentState().run(data);
+    game.state.getCurrentState().run(data.moves, data.maze);
 }
 
 // function called when user clicks the submit button to submit his code
