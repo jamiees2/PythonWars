@@ -12,4 +12,4 @@ def run(code, level):
     exec(code, globals(), d)
 
     d['move'](robot)
-    return world._moves
+    return world.get_data()

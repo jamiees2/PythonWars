@@ -12,7 +12,10 @@ class World(object):
         self._moves = []
         self._time = []
         self._maze = maze
-        self._s = '\n'.join(','.join(str(i) for i in row) for row in self._maze)
+        self._maze_csv = '\n'.join(','.join(str(i) for i in row) for row in self._maze)
+
+    def get_data(self):
+        return {"moves": self._moves, "maze": self._maze_csv}
 
     def get_at(self, x, y):
         if self.check_bounds(x, y):
