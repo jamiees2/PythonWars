@@ -66,36 +66,6 @@ PythonWars.prototype = {
     layer.resizeWorld();
 
     this.cursors = this.input.keyboard.createCursorKeys();
-
-    actions = [
-                [
-                  ["A", "CREATE", "PLAYER", 1, 1],
-                  ["B", "CREATE", "ENEMY", 3, 1],
-                  ["C", "CREATE", "ENEMY", 4, 1],
-                  ["D", "CREATE", "ENEMY", 5, 1]
-                ],
-                [["A", "DOWN"], ["B", "DOWN"]],
-                [["A", "DOWN"], ["B", "DOWN"]],
-                [["A", "DOWN"], ["B", "DOWN"]],
-                [
-                  ["A", "DOWN"],
-                  ["B", "UP"],
-                  ["E", "CREATE", "COIN", 3, 5, 1]
-                ],
-                [["A", "RIGHT"]],
-                [
-                  ["D", "RIGHT"],
-                  ["C", "DESTRUCT"],
-                  ["A", "RIGHT"]
-                ],
-                [
-                  ["D", "RIGHT"],
-                  ["E", "DESTRUCT"]
-                ],
-                [["D", "LEFT"]]
-    ];
-
-    this.run(actions);
   },
 
   loadMap: function(mapData) {
@@ -119,13 +89,21 @@ PythonWars.prototype = {
           sprite = this.add.sprite(32, 32, 'sprites', 1);
           break;
         case "COIN":
-          coinValue = args[3];
-          sprite = this.add.sprite(32, 32, 'sprites', 2 + (coinValue - 1));
+          // coinValue = args[3];
+          sprite = this.add.sprite(32, 32, 'sprites', 2);
           break;
     }
 
     this.sprites[id] = new PythonSprite(id, x, y, sprite);
     this.sprites[id].init();
+  },
+
+  resetSprites: function() {
+    for(var id in this.sprites)
+    {
+      this.world.remove(this.sprites[id].sprite);
+      delete this.sprites[id];
+    }
   },
 
   commands: function(id, command, args) {
@@ -157,20 +135,24 @@ PythonWars.prototype = {
 
   },
 
-  run: function(actions) {
+  actionLoop: function(actions) {
     if (actions.length > 0) {
       a = actions.shift();
 
       for(tick in a) {
         tick_actions = a[tick];
-        console.log(tick_actions)
         id = tick_actions.shift();
         action = tick_actions.shift();
         this.commands(id, action, tick_actions);
       }
 
-      this.time.events.add(Phaser.Timer.SECOND * 0.7, function(){this.run(actions)}, this);
+      this.time.events.add(Phaser.Timer.SECOND * 0.7, function(){this.actionLoop(actions)}, this);
     }
+  },
+
+  run: function(actions) {
+    this.resetSprites();
+    this.actionLoop(actions);
   },
 
   update: function () {
