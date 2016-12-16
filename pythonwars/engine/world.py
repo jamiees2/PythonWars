@@ -47,6 +47,8 @@ class World(object):
             self._objects[o.id] = (newx, newy)
             self._maze[newy][newx] = o
             self._maze[y][x] = EMPTY
+        else:
+            raise TypeError("Cannot walk through walls!")
 
     def move(self, o, d):
         x, y = self.get_object(o.id)
