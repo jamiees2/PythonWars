@@ -1,5 +1,3 @@
-import csv
-
 EMPTY = 1
 WALL = 2
 
@@ -9,15 +7,11 @@ class GameObject(object):
 
 
 class World(object):
-    def __init__(self, file):
-        self._maze = []
+    def __init__(self, maze):
         self._objects = {}
         self._moves = []
         self._time = []
-        with open(file) as c:
-            reader = csv.reader(c)
-            for row in reader:
-                self._maze.append(row)
+        self._maze = maze
         self._s = '\n'.join(','.join(str(i) for i in row) for row in self._maze)
 
     def get_at(self, x, y):
@@ -29,6 +23,7 @@ class World(object):
             o._world = self
             self._maze[y][x] = o
             self._time.append([o.id, 'CREATE', o.type, x, y])
+            self._objects[o.id] = (x, y)
         else:
             raise TypeError("Can't place object on a wall")
 
@@ -37,6 +32,7 @@ class World(object):
         x, y = self._objects[o_id]
         self._maze[y][x] == EMPTY
         self._time.append([o.id, 'DESTRUCT'])
+        del self._objects[o.id]
 
     def move_object(self, o, newx, newy):
         x, y = self.get_object(o.id)

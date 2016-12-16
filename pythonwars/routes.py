@@ -73,5 +73,5 @@ def dashboard():
 def submit():
     code = request.form['data']
     print(code)
-    out = engine.run(code, os.path.join(os.path.dirname(__file__), "static", "assets", "maze.csv"))
+    out = engine.run(code, "level1")
     return jsonify(out)
