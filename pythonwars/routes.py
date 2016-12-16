@@ -3,6 +3,7 @@ from pythonwars.models import db, User
 from pythonwars.util import is_logged_in, login_required, context_processor
 from pythonwars.config import SECRET_KEY, SQLALCHEMY_DATABASE_URI, SQLALCHEMY_TRACK_MODIFICATIONS
 import pythonwars.engine as engine
+import os
 
 pythonwars = Flask(__name__)
 pythonwars.config["SQLALCHEMY_DATABASE_URI"] = SQLALCHEMY_DATABASE_URI
@@ -72,5 +73,5 @@ def dashboard():
 def submit():
     code = request.form['data']
     print(code)
-    out = engine.run(code, None)
+    out = engine.run(code, os.path.join(os.path.dirname(__file__), "static", "assets", "maze.csv"))
     return jsonify(out)

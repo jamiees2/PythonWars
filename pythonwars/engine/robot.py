@@ -1,16 +1,26 @@
-class Robot(object):
+from .world import GameObject
+
+
+class Robot(GameObject):
+    type = "PLAYER"
+
     def __init__(self, id):
-        self._moves = []
-        self._id = id
+        self.id = id
+        self.coins_collected = 0
+        self._world = None
 
-    def moves(self):
-        return self._moves
+    def _move(self, dir):
+        self._world.move_object(self, dir)
+        self._world.tick()
 
-    def forward(self):
-        self._moves.append({"id": self._id, "move": 1})
+    def up(self):
+        self._move("UP")
 
-    def rotateLeft(self):
-        self._moves.append({"id": self._id, "rotate": -1})
+    def down(self):
+        self._move("DOWN")
 
-    def rotateRight(self):
-        self._moves.append({"id": self._id, "rotate": 1})
+    def left(self):
+        self._move("LEFT")
+
+    def right(self):
+        self._move("RIGHT")
