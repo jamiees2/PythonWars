@@ -53,9 +53,9 @@ PythonWars.prototype = {
   },
 
   preload: function () {
-    this.load.tilemap('map', 'static/assets/maze.csv', null, Phaser.Tilemap.CSV);
-    this.load.image('tiles', 'static/img/tiles.png');
-    this.load.spritesheet('sprites', 'static/img/sprites.png', 32, 32, 5);
+    this.load.tilemap('map', '/static/assets/maze.csv', null, Phaser.Tilemap.CSV);
+    this.load.image('tiles', '/static/img/tiles.png');
+    this.load.spritesheet('sprites', '/static/img/sprites.png', 32, 32, 5);
   },
 
   create: function () {
