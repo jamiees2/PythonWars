@@ -23,7 +23,7 @@
                   </ul>
                 {% else %}
                   <ul id="nav-mobile" class="right hide-on-med-and-down">
-                      <li><a href="{{ url_for('dashboard') }}">Play</a></li>
+                      <li><a href="{{ url_for('dashboard',id=1) }}">Play</a></li>
                       <li><a href="{{ url_for('logout') }}">Logout</a></li>
                   </ul>
                 {% endif %}
