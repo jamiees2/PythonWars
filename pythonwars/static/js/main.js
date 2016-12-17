@@ -28,6 +28,7 @@ function process_response(data) {
 
 // function called when user clicks the submit button to submit his code
 function submit_code(data) {
+    console.log(level);
     document.getElementById("success").style.display = "none";
     document.getElementById("loading").style.display = "inline";
     // timeout to see that it's loading
@@ -36,7 +37,7 @@ function submit_code(data) {
         console.log(code)
         $.ajax({
           type: "POST",
-          url: "/submit",
+          url: "/submit/" + level,
           data: {data: code},
           success: process_response,
           error: process_response
