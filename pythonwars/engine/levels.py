@@ -29,4 +29,4 @@ def level1():
 
     return {"robot": robot, "world": world}
 
-levels['level1']  = level1
+levels['1']  = level1

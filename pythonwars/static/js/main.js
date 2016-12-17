@@ -46,8 +46,8 @@ function submit_code(data) {
 }
 
 function load_maze() {
-  var level = $("#level").attr("data-level");
   $.get("/maze/" + level, function(data){
+    console.log(data);
     game.state.getCurrentState().loadMap(data.maze);
   });
 }
