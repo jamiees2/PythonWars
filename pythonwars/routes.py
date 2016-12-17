@@ -67,7 +67,7 @@ def register():
 @login_required
 def dashboard():
     # TODO: find first board user hasn't completed?
-    return redirect(url_for('level',id=1))
+    return redirect(url_for('level',id='1'))
 
 @pythonwars.route('/level/<id>', methods=['GET'])
 @login_required
@@ -81,10 +81,10 @@ def get_maze(level):
     out =  data["world"].get_data()
     return jsonify(out)
 
-@pythonwars.route('/submit', methods=['POST'])
+@pythonwars.route('/submit/<level>', methods=['POST'])
 @login_required
-def submit():
+def submit(level):
     code = request.form['data']
     print(code)
-    out = engine.run(code, "level1")
+    out = engine.run(code, level)
     return jsonify(out)
