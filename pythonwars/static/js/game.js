@@ -59,14 +59,25 @@ PythonWars.prototype = {
 
   create: function () {
     this.cursors = this.input.keyboard.createCursorKeys();
-    this.map.addTilesetImage('tiles');
+    this.fetchMap();
   },
 
   loadMap: function(mapData) {
     this.load.tilemap('map', null, mapData, Phaser.Tilemap.CSV);
     this.map = this.add.tilemap('map');
+    this.map.addTilesetImage('tiles');
     layer = this.map.createLayer(0);
     layer.resizeWorld();
+  },
+
+  fetchMap: function() {
+    $(function() {
+      var level = $("#level").attr("data-level");
+      var currentGame = this;
+      $.get("/maze/" + level, function(data){
+        game.state.getCurrentState().loadMap(data.maze);
+      }.bind(this));
+    });
   },
 
   loadSprite: function(id, args) {
