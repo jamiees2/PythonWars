@@ -43,3 +43,14 @@ function submit_code(data) {
         });
     },1000);
 }
+
+function load_maze() {
+  var level = $("#level").attr("data-level");
+  $.get("/maze/" + level, function(data){
+    game.state.getCurrentState().loadMap(data.maze);
+  });
+}
+
+$(function() {
+    load_maze();
+});

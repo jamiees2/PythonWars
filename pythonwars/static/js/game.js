@@ -53,25 +53,18 @@ PythonWars.prototype = {
   },
 
   preload: function () {
-    this.load.tilemap('map', 'static/assets/maze.csv', null, Phaser.Tilemap.CSV);
-    this.load.image('tiles', 'static/img/tiles.png');
-    this.load.spritesheet('sprites', 'static/img/sprites.png', 32, 32, 5);
+    this.load.image('tiles', '/static/img/tiles.png');
+    this.load.spritesheet('sprites', '/static/img/sprites.png', 32, 32, 5);
   },
 
   create: function () {
-    this.map = this.add.tilemap('map');
-    this.map.addTilesetImage('tiles', 'tiles');
-
-    layer = this.map.createLayer(0);
-    layer.resizeWorld();
-
     this.cursors = this.input.keyboard.createCursorKeys();
+    this.map.addTilesetImage('tiles');
   },
 
   loadMap: function(mapData) {
     this.load.tilemap('map', null, mapData, Phaser.Tilemap.CSV);
     this.map = this.add.tilemap('map');
-    this.map.addTilesetImage('tiles', 'tiles');
     layer = this.map.createLayer(0);
     layer.resizeWorld();
   },

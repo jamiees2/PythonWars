@@ -3,6 +3,7 @@ from pythonwars.models import db, User
 from pythonwars.util import is_logged_in, login_required, context_processor
 from pythonwars.config import SECRET_KEY, SQLALCHEMY_DATABASE_URI, SQLALCHEMY_TRACK_MODIFICATIONS
 import pythonwars.engine as engine
+import pythonwars.engine.levels as levels
 import os
 
 pythonwars = Flask(__name__)
@@ -76,8 +77,8 @@ def level(id):
 @pythonwars.route('/maze/<string:level>', methods=['GET'])
 @login_required
 def get_maze(level):
-    # Get maze data
-    out = engine.run(code, level)
+    data = levels.levels[level]()
+    out =  data["world"].get_data()
     return jsonify(out)
 
 @pythonwars.route('/submit', methods=['POST'])
