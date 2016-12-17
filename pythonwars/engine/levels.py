@@ -27,6 +27,6 @@ def level1():
 
     world.tick()
 
-    return {"robot": robot, "world": world}
+    return {"robot": robot, "world": world, "coins": 1}
 
 levels['1']  = level1

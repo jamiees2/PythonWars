@@ -14,6 +14,7 @@ function process_response(data) {
     if(data.success == true) {
         document.getElementById("loading").style.display = "none";
         document.getElementById("success").style.display = "inline";
+        console.log(data.victory);
         $("#error").text('');
         game.state.getCurrentState().run(data.results.moves, data.results.maze);
     } else {
