@@ -40,7 +40,13 @@ PythonSprite.prototype = {
     game.add.tween(this.sprite).to( { x: this.x * 32, y: this.y * 32  }, 500, Phaser.Easing.Linear.None, true );
   },
 
-  updatePos: function(direction) {
+  teleport: function(x, y) {
+    this.x = x;
+    this.y = y;
+    this.updatePos();
+  },
+
+  updatePos: function() {
     this.sprite.x = this.x * 32
     this.sprite.y = this.y * 32
   }
@@ -80,19 +86,29 @@ PythonWars.prototype = {
     type = args[0]
     x = args[1]
     y = args[2]
+    var spriteId = 0;
 
     switch(type){
         case "PLAYER":
-          sprite = this.add.sprite(32, 32, 'sprites');
+          id = 0
           break;
         case "ENEMY":
-          sprite = this.add.sprite(32, 32, 'sprites', 1);
+          id = 1;
           break;
         case "COIN":
-          // coinValue = args[3];
-          sprite = this.add.sprite(32, 32, 'sprites', 2);
+          id = 2;
+          break;
+        case "PORTAL":
+          id = 3;
+          break;
+        case "CRATE":
+          id = 4;
+          break;
+        case "PLATE":
+          id = 5;
           break;
     }
+    sprite = this.add.sprite(32, 32, 'sprites', spriteId);
 
     this.sprites[id] = new PythonSprite(id, x, y, sprite);
     this.sprites[id].init();
@@ -128,6 +144,11 @@ PythonWars.prototype = {
           break;
         case "CREATE":
           this.loadSprite(id, args);
+          break;
+        case "TELEPORT":
+          x = args[0];
+          y = args[1];
+          sprite.teleport(x, y);
           break;
         default:
             console.log("ERROR: invalid command ", command);
