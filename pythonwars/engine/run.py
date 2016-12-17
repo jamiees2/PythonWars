@@ -9,7 +9,10 @@ def run(code, level):
     # TODO: horrible, horrible security
     # Maybe run in subprocess (for timeout), and in pysandbox?
     d = {}
-    exec(code, globals(), d)
-
-    d['move'](robot)
-    return world.get_data()
+    try:
+        exec(code, globals(), d)
+        d['move'](robot)
+        return {"results": world.get_data(), "success": True }
+    except Exception as e:
+        print("Unexpected error:", str(e))
+        return {"results": str(e), "success": False }
