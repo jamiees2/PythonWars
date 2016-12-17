@@ -67,6 +67,12 @@ def register():
 def dashboard():
     return render_template('dashboard.html')
 
+@pythonwars.route('/maze/<string:level>', methods=['GET'])
+@login_required
+def get_maze(level):
+    # Get maze data
+    out = engine.run(code, level)
+    return jsonify(out)
 
 @pythonwars.route('/submit', methods=['POST'])
 @login_required
