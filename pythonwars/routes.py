@@ -62,10 +62,16 @@ def register():
         return redirect(url_for('register'))
 
 
-@pythonwars.route('/dashboard', methods=['GET'])
+@pythonwars.route('/level', methods=['GET'])
 @login_required
 def dashboard():
-    return render_template('dashboard.html')
+    # TODO: find first board user hasn't completed?
+    return redirect(url_for('level',id=1))
+
+@pythonwars.route('/level/<id>', methods=['GET'])
+@login_required
+def level(id):
+    return render_template('dashboard.html', level=id)
 
 @pythonwars.route('/maze/<string:level>', methods=['GET'])
 @login_required

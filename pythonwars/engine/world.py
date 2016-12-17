@@ -40,6 +40,7 @@ class World(object):
     def move_object(self, o, newx, newy):
         x, y = self.get_object(o.id)
         res = self.get_at(newx, newy)
+        print(res)
         flag = False
         if isinstance(res, GameObject):
             flag = res.collision(o)
@@ -47,14 +48,16 @@ class World(object):
             self._objects[o.id] = (newx, newy)
             self._maze[newy][newx] = o
             self._maze[y][x] = EMPTY
+        else:
+            raise TypeError("Cannot walk through walls!")
 
     def move(self, o, d):
         x, y = self.get_object(o.id)
         if d == 'UP':
-            self.move_object(o, x, y + 1)
+            self.move_object(o, x, y - 1)
             self._time.append([o.id, 'UP'])
         elif d == 'DOWN':
-            self.move_object(o, x, y - 1)
+            self.move_object(o, x, y + 1)
             self._time.append([o.id, 'DOWN'])
         elif d == 'LEFT':
             self.move_object(o, x - 1, y)
