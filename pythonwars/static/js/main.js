@@ -37,7 +37,7 @@ function submit_code(data) {
         console.log(code)
         $.ajax({
           type: "POST",
-          url: "/submit/" + level,
+          url: "/submit/" + LEVEL,
           data: {data: code},
           success: process_response,
           error: process_response

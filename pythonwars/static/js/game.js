@@ -71,13 +71,9 @@ PythonWars.prototype = {
   },
 
   fetchMap: function() {
-    $(function() {
-      var level = $("#level").attr("data-level");
-      var currentGame = this;
-      $.get("/maze/" + level, function(data){
-        game.state.getCurrentState().loadMap(data.maze);
-      }.bind(this));
-    });
+    $.get("/maze/" + LEVEL, function(data){
+      this.loadMap(data.maze);
+    }.bind(this));
   },
 
   loadSprite: function(id, args) {
