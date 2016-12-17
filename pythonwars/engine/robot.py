@@ -13,6 +13,9 @@ class Robot(GameObject):
         self._world.move(self, dir)
         self._world.tick()
 
+    def collision(other):
+        return False
+
     def up(self):
         self._move("UP")
 

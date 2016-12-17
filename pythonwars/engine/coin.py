@@ -1,4 +1,4 @@
-from .world import GameObject
+from .world import GameObject, EMPTY
 
 
 class Coin(GameObject):
@@ -10,5 +10,6 @@ class Coin(GameObject):
 
     def collision(self, other):
         other.coins_collected += 1
+        self._world.destroy_object(self, repl=EMPTY)
         return True
 

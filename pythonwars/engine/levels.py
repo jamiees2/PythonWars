@@ -23,7 +23,7 @@ def level1():
     world = World(maze)
     world.create_object(Coin("Coin1"), 1, 1)
     robot = Robot("Robot1")
-    world.create_object(robot, 1, 2)
+    world.create_object(robot, 1, 2, static=False)
 
     world.tick()
 
