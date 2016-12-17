@@ -72,7 +72,7 @@ PythonWars.prototype = {
 
   fetchMap: function() {
     $.get("/maze/" + LEVEL, function(data){
-      this.loadMap(data.maze);
+      this.run(data.moves, data.maze);
     }.bind(this));
   },
 
