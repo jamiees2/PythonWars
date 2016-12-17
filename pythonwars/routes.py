@@ -32,7 +32,7 @@ def login():
         user = User.query.filter_by(username=username).first()
         if user.checkPassword(password):
             session["user"] = user.id
-            return redirect(url_for('dashboard',id=1))
+            return redirect(url_for('dashboard'))
         else:
             return render_template('login.html', error="incorrect credentials")
 
@@ -62,10 +62,15 @@ def register():
         return redirect(url_for('register'))
 
 
-@pythonwars.route('/level/<id>', methods=['GET'], defaults={'id': 1})
+@pythonwars.route('/level', methods=['GET'])
 @login_required
-def dashboard(id):
+def dashboard():
     # TODO: find first board user hasn't completed?
+    return redirect(url_for('level',id=1))
+
+@pythonwars.route('/level/<id>', methods=['GET'])
+@login_required
+def level(id):
     return render_template('dashboard.html', level=id)
 
 
