@@ -38,6 +38,7 @@ def level1():
 
     world.create_object(Plate('plate1'), 2,2)
     world.create_object(Crate('crate1'), 9,6)
+    world.create_object(Crate('crate2'), 1,3)
 
 
     robot = Robot("Robot1")
