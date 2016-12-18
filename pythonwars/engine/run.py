@@ -17,9 +17,10 @@ def run(code, level):
         d['move'](robot)
         if robot.coins_collected == data['coins']:
             victory = True
+            moves = robot.moves
         # hide the level if the mode was invisible
         out = world.get_data(hidden=(mode == MODE_INVISIBLE and not victory))
-        return {"results": out, "success": True, "victory": victory}
+        return {"results": out, "success": True, "victory": victory, "moves": moves}
     except Exception as e:
         print("Unexpected error:", str(e))
         return {"results": str(e), "success": False, "victory": False}

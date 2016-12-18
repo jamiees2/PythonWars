@@ -8,8 +8,10 @@ class Robot(GameObject):
         self.id = id
         self.coins_collected = 0
         self._world = None
+        self.moves = 0
 
     def _move(self, dir):
+        self.moves += 1
         self._world.move_dir(self, dir)
         self._world.tick()
 
