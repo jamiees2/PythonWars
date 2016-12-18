@@ -95,10 +95,8 @@ def submit(level):
     out = engine.run(code, level)
     print(out)
     if out['victory']:
-        # check if exact same result submitted before?
-        #def __init__(self, user, level, steps, length, code, score):
-        scoreCheck = Score.query.filter_by(user=get_user(), code=code, level=level).first()
-        if not scoreCheck:
+        dupeCheck = Score.query.filter_by(user=get_user(), code=code, level=level).first()
+        if not dupeCheck:
             length = len(code.replace(" ", ""))
             score = Score(get_user(), level, out['moves'], length, code, out['moves'])
             db.session.add(score)
