@@ -100,3 +100,27 @@ body {
   font-size: 3.5rem;
   padding: 12px;
 }
+
+.card-header {
+  font-weight: 300;
+  font-size: 1.7rem;
+  padding: 1.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.card {
+  border-radius: 5px;
+}
+
+code {
+  padding: 5px;
+  background: #eeeeee;
+}
+
+.doc-desc {
+  margin-top: 4px;
+  margin-left: 1rem;
+  margin-bottom: 1rem;
+
+}
+

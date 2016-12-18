@@ -47,6 +47,98 @@ def move(robot):
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col s4">
+            <div class="card">
+                <div class="card-header blue white-text">
+                    Movement
+                </div>
+                <div class="card-content">
+                    <ul>
+                        <li>
+                            <code>robot.up()</code>
+                            <div class="doc-desc">Moves the robot up one tile</div>
+                        </li>
+                        <li>
+                            <code>robot.down()</code>
+                            <div class="doc-desc">Moves the robot down one tile</div>
+                        </li>
+                        <li>
+                            <code>robot.left()</code>
+                            <div class="doc-desc">Moves the robot left one tile</div>
+                        </li>
+                        <li>
+                            <code>robot.right()</code>
+                            <div class="doc-desc">Moves the robot right one tile</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col s4">
+            <div class="card">
+                <div class="card-header green white-text">
+                    Map
+                </div>
+                <div class="card-content">
+                    <ul>
+                        <li>
+                            <code>robot.see(x, y)</code>
+                            <div class="doc-desc">Returns the type of block at the given x and y coordinates. The types of blocks can be seen in the <b>Environment</b> section.</div>
+                        </li>
+                        <li>
+                            <code>robot.get_pos()</code>
+                            <div class="doc-desc">Returns x and y coordinates of the robot's current position</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col s4">
+            <div class="card">
+                <div class="card-header purple white-text">
+                    Environment
+                </div>
+                <div class="card-content">
+                    The following block types are returned from the <code>robot.see(x, y)</code> function
+                    <ul>
+                        <li>
+                            <code>WALL</code>
+                            <div class="doc-desc">You are unable to walk through or over walls.</div>
+                        </li>
+                        <li>
+                            <code>SPACE</code>
+                            <div class="doc-desc">The space block denotes empty space, meaning you are able to walk on them.</div>
+                        </li>
+                        <li>
+                            <code>PLAYER</code>
+                            <div class="doc-desc">This block represents your robot.</div>
+                        </li>
+                        <li>
+                            <code>ENEMY</code>
+                            <div class="doc-desc">Enemies are out to get you and will kill you when you collide with them</div>
+                        </li>
+                        <li>
+                            <code>COIN</code>
+                            <div class="doc-desc">Coin blocks can be collected by your robot.</div>
+                        </li>
+                        <li>
+                            <code>PORTAL</code>
+                            <div class="doc-desc">A portal block will teleport you to a secondary portal block when you collide with it. Note that portals do not work when crates have been pushed on top of them.</div>
+                        </li>
+                        <li>
+                            <code>CRATE</code>
+                            <div class="doc-desc">When a robot collides with a crate, the crate gets pushed to the next free tile. Crates can not pass through walls.</div>
+                        </li>
+                        <li>
+                            <code>PLATE</code>
+                            <div class="doc-desc">Pressure plates are triggered when a robot steps on them. When a robot steps off the pressure plate a wall collapses behind them where the plate used to be.</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div id="finishedModal" class="modal">
