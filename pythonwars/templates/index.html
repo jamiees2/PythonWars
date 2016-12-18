@@ -9,9 +9,9 @@
           <tr>
               <th data-field="id">Number</th>
               <th data-field="name">Username</th>
-              <th data-field="lvl1">Level 1</th>
-              <th data-field="lvl2">Level 2</th>
-              <th data-field="lvl3">Level 3</th>
+              {% for lvl in levels %}
+                  <th data-field="lvl{{ lvl }}">Level {{ lvl }}</th>
+              {% endfor %}
               <th data-field="total">Total Score</th>
           </tr>
         </thead>
@@ -21,23 +21,13 @@
             <td>{{loop.index}}</td>
             <td>{{s["user"]["username"]}}</td>
     
-            {% if "1" in s %}
-              <td>{{s["1"][0]}}</td>
-            {% else %}
-              <td></td>
-            {% endif %}
-    
-            {% if "2" in s %}
-              <td>{{s["2"][0]}}</td>
-            {% else %}
-              <td></td>
-            {% endif %}
-    
-            {% if "3" in s %}
-              <td>{{s["3"][0]}}</td>
-            {% else %}
-              <td></td>
-            {% endif %}
+            {% for lvl in levels %}
+                {% if lvl in s %}
+                <td>{{s[lvl][0]}} ({{ s[lvl][1] }})</td>
+                {% else %}
+                  <td>-</td>
+                {% endif %}
+            {% endfor %}
     
             <td>{{s["total"][0]}}</td>
           </tr>

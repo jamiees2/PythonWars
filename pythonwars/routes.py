@@ -31,7 +31,7 @@ def index():
         scoreboard[score.user_id]["total"] = (a + score.score, b + score.length)
         scoreboard[score.user_id]["total_levels"] += 1
     scoreboard = sorted(scoreboard.values(), key=lambda k: (-k["total_levels"], k["total"][0], k["total"][1]))
-    return render_template('index.html', data=scoreboard)
+    return render_template('index.html', data=scoreboard, levels=levels.level_list)
 
 
 @pythonwars.route('/login', methods=['GET', 'POST'])
@@ -88,7 +88,7 @@ def dashboard():
 def level(id):
     #highest = Score.query.filter_by(user=get_user(), level=id).orderBy(steps).first()
     #score=highest
-    return render_template('dashboard.html', level=id, levels=sorted(levels.levels.keys()))
+    return render_template('dashboard.html', level=id, levels=levels.level_list)
 
 
 @pythonwars.route('/maze/<string:level>', methods=['GET'])
