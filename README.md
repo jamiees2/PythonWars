@@ -23,6 +23,8 @@ The score upon completing a level is how many steps the robot needed, the goal i
 # Implementation
 When user submits a python code, it is executed on the server. Instructions are generated for the robot, those are then simulated for the user. 
 
+CodeMirror was used for the code submission form and Phaser for the game board. Materialize was used for styling.
+
 # Installation
 ## Requirements
 * `python3`
@@ -32,14 +34,14 @@ You will also need to install all of the python modules referenced in
 pip3 install -r requirements.txt
 ```
 
-# PyPI packages used
-## bcrypt
-## Flask
-### Flask-Migrate
-### Flask-Script
-### Flask-SQLAlchemy
-## voluptuous
-## passlib
+### PyPI packages used
+`bcrypt`
+
+`Flask`, `Flask-Migrate`, `Flask-Script` and `Flask-SQLAlchemy`
+
+`voluptuous`
+
+`passlib`
 
 ## Database
 To set up the database you need to run the following commands
