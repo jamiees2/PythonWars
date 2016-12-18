@@ -23,13 +23,14 @@ def index():
     scoreboard = {}
     for score in scores:
         if score.user_id not in scoreboard:
-            scoreboard[score.user_id] = {"user": users[score.user_id], "total": (0, 0)}
+            scoreboard[score.user_id] = {"user": users[score.user_id], "total": (0, 0), "total_levels": 0}
         if score.level in scoreboard[score.user_id]:
             continue
         scoreboard[score.user_id][score.level] = (score.score, score.length)
         a, b = scoreboard[score.user_id]["total"]
         scoreboard[score.user_id]["total"] = (a + score.score, b + score.length)
-    scoreboard = sorted(scoreboard.values(), key=lambda k: (k["total"][0], k["total"][1]))
+        scoreboard[score.user_id]["total_levels"] += 1
+    scoreboard = sorted(scoreboard.values(), key=lambda k: (-k["total_levels"], k["total"][0], k["total"][1]))
     return render_template('index.html', data=scoreboard)
 
 
