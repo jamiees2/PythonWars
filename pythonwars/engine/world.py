@@ -4,7 +4,8 @@ WALL = 2
 
 
 class GameObject(object):
-    pass
+    def remove(self):
+        pass
 
 
 class World(object):
@@ -27,7 +28,7 @@ class World(object):
             return self._maze[y][x]
 
     def create_object(self, o, x, y, static=True):
-        if self.get_at(x, y) == EMPTY:
+        if self.get_at(x, y) == EMPTY or o.type == 'PLATE':
             o._world = self
             if static:
                 self._maze_default[y][x] = o
@@ -42,7 +43,7 @@ class World(object):
         x, y = self._objects[o_id]
         if repl is None:
             repl = self._maze_default[y][x]
-        self._maze[y][x] == repl
+        self._maze[y][x] = repl
         self._time.append([o.id, 'DESTRUCT'])
         del self._objects[o.id]
 
@@ -54,6 +55,7 @@ class World(object):
 
     def move_check(self, o, newx, newy):
         res = self.get_at(newx, newy)
+        x, y = self.get_object(o.id)
         flag = False
         if isinstance(res, GameObject):
             flag = res.collision(o)
@@ -61,6 +63,9 @@ class World(object):
                 return
         if res == EMPTY or flag:
             self.move(o, newx, newy)
+            res = self.get_at(x,y)
+            if isinstance(res, GameObject):
+                res.remove()
         else:
             raise TypeError("Cannot walk through walls!")
 

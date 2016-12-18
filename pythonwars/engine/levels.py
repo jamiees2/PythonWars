@@ -3,6 +3,7 @@ from .coin import Coin
 from .robot import Robot
 from .portal import Portal
 from .crate import Crate
+from .plate import Plate
 
 MODE_REGULAR = 1
 MODE_INVISIBLE = 2
@@ -35,7 +36,9 @@ def level1():
     world.create_object(port1, 1, 6)
     world.create_object(port2, 9, 8)
 
-    world.create_object(Crate('crate1'), 1,3)
+    world.create_object(Plate('plate1'), 2,2)
+    world.create_object(Crate('crate1'), 9,6)
+
 
     robot = Robot("Robot1")
     world.create_object(robot, 1, 2, static=False)
