@@ -47,6 +47,8 @@ class World(object):
         res = self.get_at(newx, newy)
         if isinstance(res, GameObject):
             flag = res.collision(o)
+            if flag is None:
+                return
         if res == EMPTY or flag:
             self._objects[o.id] = (newx, newy)
             self._maze[newy][newx] = o
@@ -68,6 +70,11 @@ class World(object):
         elif d == 'RIGHT':
             self.move_object(o, x + 1, y)
             self._time.append([o.id, 'RIGHT'])
+
+    def through_portal(self, o, newx, newy):
+        x, y = self.get_object(o.id)
+        self._objects[o.id] = (newx, newy)
+        self._maze[newy][newx] = o
 
     def get_object(self, id):
         return self._objects[id]

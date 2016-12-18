@@ -3,9 +3,10 @@ var loading = false;
 // CodeMirror
 var editor = CodeMirror.fromTextArea(document.getElementById('code'), {
     lineNumbers: true,
-    value: "def robot():\n#Implement your code here\n",
     mode:  "python"
 });
+
+var marker = editor.markText({line: 0, ch: 0}, {line: 1}, {readOnly: true});
 
 
 // function called if the code is accepted
