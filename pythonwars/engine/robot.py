@@ -29,9 +29,9 @@ class Robot(GameObject):
             return res.type
         else:
             if res == WALL:
-                return "#"
+                return "WALL"
             elif res == EMPTY:
-                return " "
+                return "EMPTY"
 
     def get_pos(self):
         return self._world.get_object(self.id)
