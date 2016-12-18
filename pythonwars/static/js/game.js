@@ -60,7 +60,7 @@ PythonWars.prototype = {
 
   preload: function () {
     this.load.image('tiles', '/static/img/tiles.png');
-    this.load.spritesheet('sprites', '/static/img/sprites.png', 32, 32, 5);
+    this.load.spritesheet('sprites', '/static/img/sprites.png', 32, 32, 8);
   },
 
   create: function () {
@@ -99,13 +99,13 @@ PythonWars.prototype = {
           spriteId = 2;
           break;
         case "PORTAL":
-          spriteId = 3;
+          spriteId = 5;
           break;
         case "CRATE":
-          spriteId = 4;
+          spriteId = 6;
           break;
         case "PLATE":
-          spriteId = 5;
+          spriteId = 7;
           break;
     }
     sprite = this.add.sprite(32, 32, 'sprites', spriteId);
