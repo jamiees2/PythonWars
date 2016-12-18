@@ -1,4 +1,5 @@
-from .world import GameObject, EMPTY
+from .world import GameObject
+
 
 class Crate(GameObject):
     type = "CRATE"
@@ -9,6 +10,7 @@ class Crate(GameObject):
         self.in_portal = False
 
     def collision(self, other):
+        # On collision, figure out in what direction the colliding object is coming from, and move away
         if not self.in_portal:
             rx, ry = self._world.get_object(other.id)
             x, y = self._world.get_object(self.id)

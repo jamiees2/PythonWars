@@ -1,5 +1,5 @@
 from .world import GameObject, EMPTY
-from .crate import Crate
+from .robot import Robot
 
 
 class Coin(GameObject):
@@ -10,7 +10,8 @@ class Coin(GameObject):
         self._world = None
 
     def collision(self, other):
-        if isinstance(other, Crate):
+        # On collision, collect the coin, but only if it is a robot
+        if not isinstance(other, Robot):
             return None
         other.coins_collected += 1
         self._world.destroy_object(self, repl=EMPTY)
