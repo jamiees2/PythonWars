@@ -2,6 +2,7 @@ from flask_sqlalchemy import SQLAlchemy
 from passlib.hash import bcrypt
 db = SQLAlchemy()
 
+# User model
 class User(db.Model):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
@@ -13,9 +14,11 @@ class User(db.Model):
         self.setPassword(password)
 
     def setPassword(self, password):
+        # Hashes the password and then sets the password
         self.password = bcrypt.encrypt(password)
 
     def checkPassword(self, password):
+        # Hashes the incoming password and check if it matches the stored password
         return bcrypt.verify(password, self.password)
 
     def __repr__(self):
@@ -23,6 +26,7 @@ class User(db.Model):
             username=self.username
         )
 
+# Score model
 class Score(db.Model):
     __tablename__ = 'score'
     id = db.Column(db.Integer, primary_key=True)
