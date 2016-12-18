@@ -17,7 +17,11 @@ pythonwars.context_processor(context_processor)
 
 @pythonwars.route('/')
 def index():
-    return render_template('index.html')
+    lis = []
+    scores = Score.query.order_by(Score.score, Score.length).all()
+    for score in scores:
+        print(score.score)
+    return render_template('index.html', data=scores)
 
 
 @pythonwars.route('/login', methods=['GET', 'POST'])
@@ -72,6 +76,8 @@ def dashboard():
 @pythonwars.route('/level/<id>', methods=['GET'])
 @login_required
 def level(id):
+    #highest = Score.query.filter_by(user=get_user(), level=id).orderBy(steps).first()
+    #score=highest
     return render_template('dashboard.html', level=id, levels=sorted(levels.levels.keys()))
 
 
