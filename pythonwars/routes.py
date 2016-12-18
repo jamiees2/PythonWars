@@ -137,9 +137,7 @@ def dashboard():
 @pythonwars.route('/level/<id>', methods=['GET'])
 @login_required
 def level(id):
-    #highest = Score.query.filter_by(user=get_user(), level=id).orderBy(steps).first()
-    #score=highest
-    return render_template('dashboard.html', level=id, levels=levels.level_list)
+    return render_template('dashboard.html', level=id, level_list=levels.level_list, levels=levels.levels)
 
 
 @pythonwars.route('/maze/<string:level>', methods=['GET'])
