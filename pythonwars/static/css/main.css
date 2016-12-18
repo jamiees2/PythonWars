@@ -71,7 +71,7 @@ body {
   font-weight: 600;
 }
 
-.tabs {
+.panel-header {
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
 }
@@ -131,4 +131,15 @@ code {
   width: 90rem;
   margin: 0 auto;
   margin-top: 3rem;
+}
+
+.panel-head {
+  margin-bottom: -1rem;
+  padding: 1rem;
+  padding-left: 2rem;
+  padding-top: 0.5rem;;
+}
+
+.panel-head-text {
+  font-weight: 300;
 }

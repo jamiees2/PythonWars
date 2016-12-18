@@ -10,7 +10,7 @@ MODE_INVISIBLE = 2
 
 
 def level1():
-    """All of the coins"""
+    """Can you collect all of the coins?"""
     maze = [[2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
             [2, 1, 2, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
             [2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 1, 2],
@@ -42,7 +42,7 @@ def level1():
 
 
 def level2():
-    """This maze is blind. It is harder than it looks"""
+    """Oh no! Somone turn off the lights. Can you still collect all the coins? It's harder than it looks!"""
     maze = [[2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
             [2, 1, 2, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 1, 1, 1, 2],
             [2, 1, 2, 1, 2, 2, 2, 2, 1, 2, 1, 2, 2, 2, 1, 2, 2, 2, 1, 2],
@@ -73,7 +73,7 @@ def level2():
 
 
 def level3():
-    """Now you're thinking with portals"""
+    """Now you're thinking with portals. Can you collect all the coins?"""
     maze = [[2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
             [2, 1, 2, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
             [2, 1, 2, 1, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 1, 2],
