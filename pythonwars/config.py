@@ -1,5 +1,7 @@
 import os
 
+#  Configuration variables used for the application
+
 DEBUG = True
 SECRET_KEY = ".tuW;(9Xq9V53qp'E'X*(Pa>nH+]a`@b2PuyA/xGBwCTy)](`a*"
 
