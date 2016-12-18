@@ -9,6 +9,7 @@ class Robot(GameObject):
         self.coins_collected = 0
         self._world = None
         self.moves = 0
+        self._hidden = False
 
     def _move(self, dir):
         self.moves += 1
@@ -19,7 +20,7 @@ class Robot(GameObject):
         return False
 
     def see(self, x, y):
-        if self.hidden:
+        if self._hidden:
             mx, my = self.get_pos()
             if abs(mx - x) > 1 or abs(my - y) > 1:
                 return None
@@ -30,7 +31,7 @@ class Robot(GameObject):
             if res == WALL:
                 return "#"
             elif res == EMPTY:
-                return "-"
+                return " "
 
     def get_pos(self):
         return self._world.get_object(self.id)
