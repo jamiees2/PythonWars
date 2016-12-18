@@ -92,5 +92,5 @@ def get_maze(level):
 def submit(level):
     code = request.form['data']
     print(code)
-    out = engine.run(code, level)
+    out = engine.run_subprocess(code, level)
     return jsonify(out)
