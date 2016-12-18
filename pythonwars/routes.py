@@ -1,6 +1,6 @@
 from flask import Flask, redirect, render_template, url_for, request, session, make_response, jsonify
-from pythonwars.models import db, User
-from pythonwars.util import is_logged_in, login_required, context_processor
+from pythonwars.models import db, User, Score
+from pythonwars.util import is_logged_in, login_required, context_processor, get_user
 from pythonwars.config import SECRET_KEY, SQLALCHEMY_DATABASE_URI, SQLALCHEMY_TRACK_MODIFICATIONS
 import pythonwars.engine as engine
 import pythonwars.engine.levels as levels
@@ -93,4 +93,17 @@ def submit(level):
     code = request.form['data']
     print(code)
     out = engine.run(code, level)
+    print(out)
+    if out['victory']:
+        # check if exact same result submitted before?
+        #def __init__(self, user, level, steps, length, code, score):
+        scoreCheck = Score.query.filter_by(user=get_user(), code=code, level=level).first()
+        if not scoreCheck:
+            length = len(code.replace(" ", ""))
+            score = Score(get_user(), level, out['moves'], length, code, out['moves'])
+            db.session.add(score)
+            db.session.commit()
+        else:
+            out['results'] = "Duplicate Submission"
+            out['success'] = False
     return jsonify(out)
