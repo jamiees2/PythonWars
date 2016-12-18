@@ -1,4 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
 <h1>PythonWars</h1>
+{% for row  in data %}
+    <span>{{row}}</span>
+{% endfor %}
 {% endblock %}

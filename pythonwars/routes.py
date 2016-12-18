@@ -1,6 +1,6 @@
 from flask import Flask, redirect, render_template, url_for, request, session, make_response, jsonify
-from pythonwars.models import db, User
-from pythonwars.util import is_logged_in, login_required, context_processor
+from pythonwars.models import db, User, Score
+from pythonwars.util import is_logged_in, login_required, context_processor, get_user
 from pythonwars.config import SECRET_KEY, SQLALCHEMY_DATABASE_URI, SQLALCHEMY_TRACK_MODIFICATIONS
 import pythonwars.engine as engine
 import pythonwars.engine.levels as levels
@@ -17,7 +17,11 @@ pythonwars.context_processor(context_processor)
 
 @pythonwars.route('/')
 def index():
-    return render_template('index.html')
+    lis = []
+    scores = Score.query.order_by(Score.score, Score.length).all()
+    for score in scores:
+        print(score.score)
+    return render_template('index.html', data=scores)
 
 
 @pythonwars.route('/login', methods=['GET', 'POST'])
@@ -72,6 +76,8 @@ def dashboard():
 @pythonwars.route('/level/<id>', methods=['GET'])
 @login_required
 def level(id):
+    #highest = Score.query.filter_by(user=get_user(), level=id).orderBy(steps).first()
+    #score=highest
     return render_template('dashboard.html', level=id, levels=sorted(levels.levels.keys()))
 
 
@@ -93,4 +99,15 @@ def submit(level):
     code = request.form['data']
     print(code)
     out = engine.run_subprocess(code, level)
+    print(out)
+    if out['victory']:
+        dupeCheck = Score.query.filter_by(user=get_user(), code=code, level=level).first()
+        if not dupeCheck:
+            length = len(code.replace(" ", ""))
+            score = Score(get_user(), level, out['moves'], length, code, out['moves'])
+            db.session.add(score)
+            db.session.commit()
+        else:
+            out['results'] = "Duplicate Submission"
+            out['success'] = False
     return jsonify(out)
