@@ -9,6 +9,8 @@ var editor = CodeMirror.fromTextArea(document.getElementById('code'), {
     mode:  "python"
 });
 
+var marker = editor.markText({line: 0, ch: 0}, {line: 1}, {readOnly: true});
+
 
 // function called if the code is accepted
 function process_response(data) {
