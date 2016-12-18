@@ -42,7 +42,7 @@ def level1():
 
 
 def level2():
-    """Oh no! Someone turn off the lights. Can you still collect all the coins? It's harder than it looks!"""
+    """Oh no! Someone turned off the lights. Can you still collect all the coins? It's harder than it looks!"""
     maze = [[2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
             [2, 1, 2, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 1, 1, 1, 2],
             [2, 1, 2, 1, 2, 2, 2, 2, 1, 2, 1, 2, 2, 2, 1, 2, 2, 2, 1, 2],
