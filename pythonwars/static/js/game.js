@@ -78,7 +78,7 @@ PythonWars.prototype = {
 
   fetchMap: function() {
     $.get("/maze/" + LEVEL, function(data){
-      this.loadMap(data.maze);
+      this.run(data.moves, data.maze);
     }.bind(this));
   },
 
@@ -90,25 +90,22 @@ PythonWars.prototype = {
 
     switch(type){
         case "PLAYER":
-          id = 0
+          spriteId = 0
           break;
         case "ENEMY":
-          id = 1;
+          spriteId = 1;
           break;
         case "COIN":
-          id = 2;
+          spriteId = 2;
           break;
         case "PORTAL":
-          id = 3;
+          spriteId = 3;
           break;
         case "CRATE":
-          id = 4;
+          spriteId = 4;
           break;
         case "PLATE":
-          id = 5;
-          break;
-        case "PORTAL":
-          sprite = this.add.sprite(32, 32, 'sprites', 3);
+          spriteId = 5;
           break;
     }
     sprite = this.add.sprite(32, 32, 'sprites', spriteId);
@@ -126,6 +123,7 @@ PythonWars.prototype = {
   },
 
   commands: function(id, command, args) {
+      console.log(id);
     sprite = this.sprites[id];
 
     switch(command) {
