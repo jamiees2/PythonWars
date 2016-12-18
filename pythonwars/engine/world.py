@@ -46,39 +46,35 @@ class World(object):
         self._time.append([o.id, 'DESTRUCT'])
         del self._objects[o.id]
 
-    def move_object(self, o, newx, newy):
+    def move(self, o, newx, newy):
         x, y = self.get_object(o.id)
+        self._objects[o.id] = (newx, newy)
+        self._maze[newy][newx] = o
+        self._maze[y][x] = self._maze_default[y][x]
+
+    def move_check(self, o, newx, newy):
         res = self.get_at(newx, newy)
+        flag = False
         if isinstance(res, GameObject):
             flag = res.collision(o)
             if flag is None:
                 return
         if res == EMPTY or flag:
-            self._objects[o.id] = (newx, newy)
-            self._maze[newy][newx] = o
-            self._maze[y][x] = self._maze_default[y][x]
+            self.move(o, newx, newy)
         else:
             raise TypeError("Cannot walk through walls!")
 
-    def move(self, o, d):
+    def move_dir(self, o, d):
         x, y = self.get_object(o.id)
+        self._time.append([o.id, d])
         if d == 'UP':
-            self.move_object(o, x, y - 1)
-            self._time.append([o.id, 'UP'])
+            self.move_check(o, x, y - 1)
         elif d == 'DOWN':
-            self.move_object(o, x, y + 1)
-            self._time.append([o.id, 'DOWN'])
+            self.move_check(o, x, y + 1)
         elif d == 'LEFT':
-            self.move_object(o, x - 1, y)
-            self._time.append([o.id, 'LEFT'])
+            self.move_check(o, x - 1, y)
         elif d == 'RIGHT':
-            self.move_object(o, x + 1, y)
-            self._time.append([o.id, 'RIGHT'])
-
-    def through_portal(self, o, newx, newy):
-        x, y = self.get_object(o.id)
-        self._objects[o.id] = (newx, newy)
-        self._maze[newy][newx] = o
+            self.move_check(o, x + 1, y)
 
     def get_object(self, id):
         return self._objects[id]

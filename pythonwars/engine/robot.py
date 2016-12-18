@@ -10,7 +10,7 @@ class Robot(GameObject):
         self._world = None
 
     def _move(self, dir):
-        self._world.move(self, dir)
+        self._world.move_dir(self, dir)
         self._world.tick()
 
     def collision(other):

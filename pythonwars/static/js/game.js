@@ -123,7 +123,6 @@ PythonWars.prototype = {
   },
 
   commands: function(id, command, args) {
-      console.log(id);
     sprite = this.sprites[id];
 
     switch(command) {
