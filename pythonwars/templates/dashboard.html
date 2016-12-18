@@ -153,6 +153,9 @@ def move(robot):
 
 {% endblock %}
 {% block script %}
+    <script type="text/javascript" src="{{url_for('static', filename='js/codemirror.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='js/python.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='js/main.js')}}"></script>
     <script type="text/javascript" src="{{url_for('static', filename='js/phaser.min.js')}}"></script>
     <script type="text/javascript" src="{{url_for('static', filename='js/game.js')}}"></script>
 {% endblock %}
