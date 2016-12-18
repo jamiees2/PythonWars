@@ -4,7 +4,6 @@ from pythonwars.util import is_logged_in, login_required, context_processor
 from pythonwars.config import SECRET_KEY, SQLALCHEMY_DATABASE_URI, SQLALCHEMY_TRACK_MODIFICATIONS
 import pythonwars.engine as engine
 import pythonwars.engine.levels as levels
-import os
 
 pythonwars = Flask(__name__)
 pythonwars.config["SQLALCHEMY_DATABASE_URI"] = SQLALCHEMY_DATABASE_URI
@@ -73,15 +72,18 @@ def dashboard():
 @pythonwars.route('/level/<id>', methods=['GET'])
 @login_required
 def level(id):
-    return render_template('dashboard.html', level=id)
+    return render_template('dashboard.html', level=id, levels=sorted(levels.levels.keys()))
 
 
 @pythonwars.route('/maze/<string:level>', methods=['GET'])
 @login_required
 def get_maze(level):
-    print(level)
-    data = levels.levels[level]()
-    out = data["world"].get_data()
+    out = {}
+    try:
+        data = levels.levels[level]()
+        out = data["world"].get_data(hidden=data.get("mode", levels.MODE_REGULAR) == levels.MODE_INVISIBLE)
+    except:
+        out = {"error": True}
     return jsonify(out)
 
 

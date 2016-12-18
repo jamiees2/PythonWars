@@ -2,6 +2,7 @@ EMPTY = 1
 WALL = 2
 
 
+
 class GameObject(object):
     pass
 
@@ -15,8 +16,11 @@ class World(object):
         self._maze_csv = '\n'.join(','.join(str(i) for i in row) for row in self._maze_default)
         self._maze = [list(j) for j in maze]
 
-    def get_data(self):
-        return {"moves": self._moves, "maze": self._maze_csv}
+    def get_data(self, hidden=False):
+        out = {"moves": self._moves, "maze": self._maze_csv}
+        if hidden:
+            out["maze"] = "".join(c if c in [",", "\n"] else str(WALL) for c in out["maze"])
+        return out
 
     def get_at(self, x, y):
         if self.check_bounds(x, y):
