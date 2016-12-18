@@ -1,4 +1,4 @@
-from .world import GameObject
+from .world import GameObject, WALL, EMPTY
 
 
 class Robot(GameObject):
@@ -9,6 +9,7 @@ class Robot(GameObject):
         self.coins_collected = 0
         self._world = None
         self.moves = 0
+        self._hidden = False
 
     def _move(self, dir):
         self.moves += 1
@@ -17,6 +18,23 @@ class Robot(GameObject):
 
     def collision(self, other):
         return False
+
+    def see(self, x, y):
+        if self._hidden:
+            mx, my = self.get_pos()
+            if abs(mx - x) > 1 or abs(my - y) > 1:
+                return None
+        res = self._world.get_at(x, y)
+        if isinstance(res, GameObject):
+            return res.type
+        else:
+            if res == WALL:
+                return "WALL"
+            elif res == EMPTY:
+                return "EMPTY"
+
+    def get_pos(self):
+        return self._world.get_object(self.id)
 
     def up(self):
         self._move("UP")

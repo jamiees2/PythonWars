@@ -1,4 +1,46 @@
 {% extends "layout.html" %}
 {% block content %}
-<h1>PythonWars</h1>
+<div id="scoreboard">
+  <h3>Scoreboard</h3>
+  <table>
+    <thead>
+      <tr>
+          <th data-field="id">Number</th>
+          <th data-field="name">Username</th>
+          <th data-field="lvl1">Level 1</th>
+          <th data-field="lvl2">Level 2</th>
+          <th data-field="lvl3">Level 3</th>
+          <th data-field="total">Total Score</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for s in data %}
+      <tr>
+        <td>{{loop.index}}</td>
+        <td>{{s["user"]["username"]}}</td>
+
+        {% if "1" in s %}
+          <td>{{s["1"][0]}}</td>
+        {% else %}
+          <td></td>
+        {% endif %}
+
+        {% if "2" in s %}
+          <td>{{s["2"][0]}}</td>
+        {% else %}
+          <td></td>
+        {% endif %}
+
+        {% if "3" in s %}
+          <td>{{s["3"][0]}}</td>
+        {% else %}
+          <td></td>
+        {% endif %}
+
+        <td>{{s["total"][0]}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
 {% endblock %}

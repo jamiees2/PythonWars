@@ -68,6 +68,7 @@ def level2():
     world = World(maze)
     world.create_object(Coin("Coin1"), 1, 1)
     robot = Robot("Robot1")
+    robot._hidden = True
     world.create_object(robot, 1, 2, static=False)
 
     world.tick()

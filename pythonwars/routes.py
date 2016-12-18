@@ -1,6 +1,6 @@
 from flask import Flask, redirect, render_template, url_for, request, session, make_response, jsonify
-from pythonwars.models import db, User
-from pythonwars.util import is_logged_in, login_required, context_processor
+from pythonwars.models import db, User, Score
+from pythonwars.util import is_logged_in, login_required, context_processor, get_user
 from pythonwars.config import SECRET_KEY, SQLALCHEMY_DATABASE_URI, SQLALCHEMY_TRACK_MODIFICATIONS
 import pythonwars.engine as engine
 import pythonwars.engine.levels as levels
@@ -17,7 +17,20 @@ pythonwars.context_processor(context_processor)
 
 @pythonwars.route('/')
 def index():
-    return render_template('index.html')
+    scores = Score.query.order_by(Score.score, Score.length).all()
+    users = User.query.all()
+    users = {user.id: user for user in users}
+    scoreboard = {}
+    for score in scores:
+        if score.user_id not in scoreboard:
+            scoreboard[score.user_id] = {"user": users[score.user_id], "total": (0, 0)}
+        if score.level in scoreboard[score.user_id]:
+            continue
+        scoreboard[score.user_id][score.level] = (score.score, score.length)
+        a, b = scoreboard[score.user_id]["total"]
+        scoreboard[score.user_id]["total"] = (a + score.score, b + score.length)
+    scoreboard = sorted(scoreboard.values(), key=lambda k: (k["total"][0], k["total"][1]))
+    return render_template('index.html', data=scoreboard)
 
 
 @pythonwars.route('/login', methods=['GET', 'POST'])
@@ -72,6 +85,8 @@ def dashboard():
 @pythonwars.route('/level/<id>', methods=['GET'])
 @login_required
 def level(id):
+    #highest = Score.query.filter_by(user=get_user(), level=id).orderBy(steps).first()
+    #score=highest
     return render_template('dashboard.html', level=id, levels=sorted(levels.levels.keys()))
 
 
@@ -92,5 +107,16 @@ def get_maze(level):
 def submit(level):
     code = request.form['data']
     print(code)
-    out = engine.run(code, level)
+    out = engine.run_subprocess(code, level)
+    print(out)
+    if out['victory']:
+        dupeCheck = Score.query.filter_by(user=get_user(), code=code, level=level).first()
+        if not dupeCheck:
+            length = len(code.replace(" ", ""))
+            score = Score(get_user(), level, out['moves'], length, code, out['moves'])
+            db.session.add(score)
+            db.session.commit()
+        else:
+            out['results'] = "Duplicate Submission"
+            out['success'] = False
     return jsonify(out)
