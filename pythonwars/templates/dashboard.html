@@ -3,7 +3,7 @@
 <script>var LEVEL = "{{ level }}"</script>
 <div id="panel-wrapper" class="row">
     <ul class="tabs blue">
-        {% for lvl in levels %}
+        {% for lvl in level_list %}
             <li class="tab col s4"><a href="{{ url_for('level', id=lvl) }}" target="_self" class="{{'active' if level == lvl else ''}}">Level {{ lvl }}</a></li>
         {% endfor %}
     </ul>
@@ -16,6 +16,7 @@
                 <div id="game"></div>
             </div>
             <div class="col s6">
+                {{levels[level].__doc__}}
                 <form id="code-form" class="col s12">
                     <div class="row no-bot">
                         <div class="input-field col s12">
