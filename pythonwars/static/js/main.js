@@ -21,6 +21,7 @@ function process_response(data) {
       game.state.getCurrentState().run(data.results.moves, data.results.maze, function(){
         if (data.victory)
         {
+          $("#finishedModal #score").html(data.moves.toString())
           $('#finishedModal').openModal();
         }
       });
