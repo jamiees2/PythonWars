@@ -78,7 +78,7 @@ PythonWars.prototype = {
 
   fetchMap: function() {
     $.get("/maze/" + LEVEL, function(data){
-      this.run(data.moves, data.maze);
+      this.run(data.moves, data.maze, function(){});
     }.bind(this));
   },
 
@@ -90,22 +90,22 @@ PythonWars.prototype = {
 
     switch(type){
         case "PLAYER":
-          id = 0
+          spriteId = 0
           break;
         case "ENEMY":
-          id = 1;
+          spriteId = 1;
           break;
         case "COIN":
-          id = 2;
+          spriteId = 2;
           break;
         case "PORTAL":
-          id = 3;
+          spriteId = 3;
           break;
         case "CRATE":
-          id = 4;
+          spriteId = 4;
           break;
         case "PLATE":
-          id = 5;
+          spriteId = 5;
           break;
     }
     sprite = this.add.sprite(32, 32, 'sprites', spriteId);
@@ -156,7 +156,7 @@ PythonWars.prototype = {
 
   },
 
-  actionLoop: function(actions) {
+  actionLoop: function(actions, callback) {
     if (actions.length > 0) {
       a = actions.shift();
 
@@ -167,14 +167,17 @@ PythonWars.prototype = {
         this.commands(id, action, tick_actions);
       }
 
-      this.time.events.add(Phaser.Timer.SECOND * 0.7, function(){this.actionLoop(actions)}, this);
+      this.time.events.add(Phaser.Timer.SECOND * 0.7, function(){this.actionLoop(actions, callback)}, this);
+    }
+    else {
+      callback();
     }
   },
 
-  run: function(actions, maze) {
+  run: function(actions, maze, callback) {
     this.loadMap(maze);
     this.resetSprites();
-    this.actionLoop(actions);
+    this.actionLoop(actions, callback);
   },
 
   update: function () {

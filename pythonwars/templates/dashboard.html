@@ -1,70 +1,66 @@
 {% extends "layout.html" %}
 {% block content %}
 <script>var LEVEL = "{{ level }}"</script>
-{{ level.replace('"', '') }}
-<div class="row">
-  <div class="col s6">
-    <div id="game"></div>
-    <div>
-      Levels: <br>
-      <a href="{{ url_for('level',id='1') }}" class="waves-effect waves-light btn">1</a>
-      <a href="{{ url_for('level',id='2') }}" class="waves-effect waves-light btn">2</a>
-      <a href="{{ url_for('level',id='3') }}" class="waves-effect waves-light btn">3</a>
-    </div>
-  </div>
-  <div class="col s6">
-      <h2 id="level">Level {{ level }}</h2>
-        <form class="col s12">
-            <div class="row">
-                <div class="input-field col s12">
-                    <textarea id="code" name="code" type="textarea">
+<div id="panel-wrapper" class="row">
+    <ul class="tabs blue">
+        <li class="tab col s4"><a href="{{ url_for('level',id=1) }}" target="_self" class="{{'active' if level == '1' else ''}}">Level 1</a></li>
+        <li class="tab col s4"><a href="{{ url_for('level',id=2) }}" target="_self" class="{{'active' if level == '2' else ''}}">Level 2</a></li>
+        <li class="tab col s4"><a href="{{ url_for('level',id=3) }}" target="_self" class="{{'active' if level == '3' else ''}}">Level 3</a></li>
+    </ul>
+    <div id="game-panel" class="panel z-depth-1">
+        <div class="row no-bot">
+            <div class="error"></div>
+        </div>
+        <div class="row">
+            <div class="col s6">
+                <div id="game"></div>
+            </div>
+            <div class="col s6">
+                <form id="code-form" class="col s12">
+                    <div class="row no-bot">
+                        <div class="input-field col s12">
+                            <textarea id="code" name="code" type="textarea">
 def move(robot):
     # Your code here
-                    </textarea>
-                </div>
-            </div>
-            <div class="row">
-                <div class="input-field col s12">
-                    <input id="submit" class="btn right" type="button" value="Submit Code" onClick="submit_code()" />
-                    <div id="loading">
-                      <div class="preloader-wrapper small active">
-                        <div class="spinner-layer spinner-green-only">
-                          <div class="circle-clipper left">
-                            <div class="circle"></div>
-                          </div><div class="gap-patch">
-                            <div class="circle"></div>
-                          </div><div class="circle-clipper right">
-                            <div class="circle"></div>
-                          </div>
+                            </textarea>
                         </div>
-                      </div>
                     </div>
-                    <div id="error"></div>
-                    <div id="success">
-                        Success
-                    </div>
-                    <div class="row">
-                      <div class="col s12 m5">
-                        <div class="card-panel teal">
-                          <span class="white-text">
-                            <ul>
-                              <li>Move functions:</li>
-                              <li>robot.up()</li>
-                              <li>robot.down()</li>
-                              <li>robot.left()</li>
-                              <li>robot.right()</li>
-                            </ul>
-                          </span>
+                    <div class="row no-bot">
+                        <div class="col s12">
+                            <input id="submit" class="btn" type="button" value="Execute" onClick="submit_code()" ></input>
                         </div>
-                      </div>
+                    </div>
+                </form>
+                <div id="spinner" class="valign-wrapper">
+                    <div class="preloader-wrapper big active valign">
+                        <div class="spinner-layer spinner-blue-only">
+                            <div class="circle-clipper left">
+                                <div class="circle"></div>
+                            </div><div class="gap-patch">
+                                <div class="circle"></div>
+                            </div><div class="circle-clipper right">
+                                <div class="circle"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </form>
-  </div>
+        </div>
+    </div>
 </div>
+
+<div id="finishedModal" class="modal">
+    <div class="modal-content">
+        <div class="success-icon-wrapper">
+            <i class="material-icons circle green white-text success-icon">done</i>
+        </div>
+        <h4 class="center" style="font-weight: 300;">Level Completed</h4>
+    </div>
+    <a href="#!" style="width: 100%;" class=" modal-action modal-close waves-effect waves-green waves-light btn green">OK</a>
+</div>
+
 {% endblock %}
 {% block script %}
-    <script src="//cdn.jsdelivr.net/phaser/2.2.2/phaser.min.js"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='js/phaser.min.js')}}"></script>
     <script type="text/javascript" src="{{url_for('static', filename='js/game.js')}}"></script>
 {% endblock %}

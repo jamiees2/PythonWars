@@ -1,8 +1,10 @@
 var loading = false;
+var level = 1;
 
 // CodeMirror
 var editor = CodeMirror.fromTextArea(document.getElementById('code'), {
     lineNumbers: true,
+    theme: "mdn-like",
     value: "def robot():\n#Implement your code here\n",
     mode:  "python"
 });
@@ -11,31 +13,31 @@ var editor = CodeMirror.fromTextArea(document.getElementById('code'), {
 // function called if the code is accepted
 function process_response(data) {
     console.log(data.results);
+    $("#spinner").hide();
+    $("#code-form").show();
     if(data.success == true) {
-        document.getElementById("loading").style.display = "none";
-        document.getElementById("success").style.display = "inline";
-        console.log(data.victory);
-        $("#error").text('');
-        game.state.getCurrentState().run(data.results.moves, data.results.maze);
+      game.state.getCurrentState().run(data.results.moves, data.results.maze, function(){
+        if (data.victory)
+        {
+          $('#finishedModal').openModal();
+        }
+      });
     } else {
-        document.getElementById("loading").style.display = "none";
-        //document.getElementById("fail").style.display = "inline";
-        $("#error").text(data.results)
-        console.log("goes here");
-        console.log(data.results);
+        $(".error").show();
+        $(".error").text(data.results)
     }
 
 }
 
 // function called when user clicks the submit button to submit his code
 function submit_code(data) {
-    console.log(level);
-    document.getElementById("success").style.display = "none";
-    document.getElementById("loading").style.display = "inline";
+    $(".error").hide();
+    $("#spinner").show();
+    $("#code-form").hide();
+
     // timeout to see that it's loading
     setTimeout(function() {
         var code = editor.getValue();
-        console.log(code)
         $.ajax({
           type: "POST",
           url: "/submit/" + LEVEL,
@@ -45,3 +47,8 @@ function submit_code(data) {
         });
     },1000);
 }
+
+$(function(){
+  $(".error").hide();
+  $("#spinner").hide();
+});
