@@ -34,7 +34,7 @@ You will also need to install all of the python modules referenced in
 pip3 install -r requirements.txt
 ```
 
-# PyPI packages used
+### PyPI packages used
 `bcrypt`
 
 `Flask`, `Flask-Migrate`, `Flask-Script` and `Flask-SQLAlchemy`
